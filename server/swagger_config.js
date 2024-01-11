@@ -8,5 +8,9 @@ const swaggerJSDocs = YAML.load(fs.readFileSync(swaggerFilePath, "utf8"));
 
 module.exports = {
   swaggerServe: swaggerUI.serve,
-  swaggerSetup: swaggerUI.setup(swaggerJSDocs),
+  swaggerSetup: swaggerUI.setup(swaggerJSDocs, {
+    swaggerOptions: {
+      url: "/swagger.yaml", // Point to the local Swagger file
+    },
+  }),
 };
