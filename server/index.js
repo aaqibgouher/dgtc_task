@@ -1,7 +1,10 @@
 const express = require("express");
 require("dotenv").config();
-const { swaggerServe, swaggerSetup } = require("./swagger_config");
 const cors = require("cors");
+const path = require("path");
+const YAML = require("js-yaml");
+const swaggerUi = require("swagger-ui-express"); // Add this line for swagger-ui-express
+const fs = require("fs");
 
 // importing db & model
 require("./database/config");
@@ -16,7 +19,12 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.use("/api-docs", swaggerServe, swaggerSetup);
+
+// Serve Swagger UI for your custom Swagger YAML
+const swaggerFilePath = path.join(__dirname, "swagger.yaml");
+const swaggerDocument = YAML.load(fs.readFileSync(swaggerFilePath, "utf8"));
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(express.json());
 // using api
 app.use("/api", router);
