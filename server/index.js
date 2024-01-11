@@ -11,11 +11,11 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 // importing routes
 const router = require("./routes");
-const corsOption = {
-  origin: ["http://localhost:3000", "https://dgtc-task.vercel.app/"],
+const corsOptions = {
+  origin: ["http://localhost:3000", "https://dgtc-task.vercel.app"],
 };
 
-app.use(cors(corsOption));
+app.use(cors(corsOptions));
 app.use("/api-docs", swaggerServe, swaggerSetup);
 app.use(express.json());
 // using api
